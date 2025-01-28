@@ -186,3 +186,4 @@ htmlTable(x =  adsl_eff_srt,
 ```
 
 14. Next, save this .rmd file to your desktop and then click on the "Knit" button at the top of the file to render an HTML version of this document.
+
