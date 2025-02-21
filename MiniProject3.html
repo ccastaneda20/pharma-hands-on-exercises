@@ -2621,25 +2621,25 @@ format function, and specify 1 decimal place for sd and 0 for the
 rest.</p>
 <pre class="r"><code>age_stat&lt;- adsl_eff %&gt;%
   group_by(TRT01AN,TRT01A,SEX) %&gt;%
-  summarize(mean = (mean(AGE) %&gt;% round(digits = 1) %&gt;% format(nsmall=1))  ,
+  summarize(mean = (mean(AGE) %&gt;% round(digits = 0) %&gt;% format(nsmall=0))  ,
             sd = (sd(AGE) %&gt;% round(digits = 1) %&gt;% format(nsmall = 1)), 
-            med = median(AGE)  ,              
-            min = min(AGE), 
-            max = max(AGE),
-            n = n())</code></pre>
+            med = (median(AGE) %&gt;% round(digits = 0) %&gt;% format(nsmall=0)),              
+            min = (min(AGE) %&gt;% round(digits = 0) %&gt;% format(nsmall=0)), 
+            max = (max(AGE) %&gt;% round(digits = 0) %&gt;% format(nsmall=0)),
+            n = (n() %&gt;% round(digits = 0) %&gt;% format(nsmall=0)))</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;TRT01AN&#39;, &#39;TRT01A&#39;. You can override using
 ## the `.groups` argument.</code></pre>
 <pre class="r"><code>age_stat</code></pre>
 <pre><code>## # A tibble: 6 × 9
 ## # Groups:   TRT01AN, TRT01A [3]
-##   TRT01AN TRT01A               SEX    mean  sd      med   min   max     n
-##     &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
-## 1       0 Placebo              Female 76.1  8.5    77.5    59    88    46
-## 2       0 Placebo              Male   73.4  8.1    74      52    85    33
-## 3      54 Xanomeline Low Dose  Female 76.4  7.6    78      56    87    47
-## 4      54 Xanomeline Low Dose  Male   75.6  8.7    77.5    51    88    34
-## 5      81 Xanomeline High Dose Female 74.3  7.5    76      56    88    35
-## 6      81 Xanomeline High Dose Male   73.6  8.3    75      56    86    39</code></pre>
+##   TRT01AN TRT01A               SEX    mean  sd    med   min   max   n    
+##     &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1       0 Placebo              Female 76    8.5   78    59    88    46   
+## 2       0 Placebo              Male   73    8.1   74    52    85    33   
+## 3      54 Xanomeline Low Dose  Female 76    7.6   78    56    87    47   
+## 4      54 Xanomeline Low Dose  Male   76    8.7   78    51    88    34   
+## 5      81 Xanomeline High Dose Female 74    7.5   76    56    88    35   
+## 6      81 Xanomeline High Dose Male   74    8.3   75    56    86    39</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Since our output table includes ranges, we will need to combine the
 min and max value into a character string (as we did with counts and
@@ -2652,14 +2652,14 @@ range_minmax.</li>
     mutate(range_minmax=paste(&quot;(&quot;,min, &quot;,&quot;, max, &quot;)&quot;))</code></pre>
 <pre><code>## # A tibble: 6 × 10
 ## # Groups:   TRT01AN, TRT01A [3]
-##   TRT01AN TRT01A          SEX   mean  sd      med   min   max     n range_minmax
-##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;       
-## 1       0 Placebo         Fema… 76.1  8.5    77.5    59    88    46 ( 59 , 88 ) 
-## 2       0 Placebo         Male  73.4  8.1    74      52    85    33 ( 52 , 85 ) 
-## 3      54 Xanomeline Low… Fema… 76.4  7.6    78      56    87    47 ( 56 , 87 ) 
-## 4      54 Xanomeline Low… Male  75.6  8.7    77.5    51    88    34 ( 51 , 88 ) 
-## 5      81 Xanomeline Hig… Fema… 74.3  7.5    76      56    88    35 ( 56 , 88 ) 
-## 6      81 Xanomeline Hig… Male  73.6  8.3    75      56    86    39 ( 56 , 86 )</code></pre>
+##   TRT01AN TRT01A          SEX   mean  sd    med   min   max   n     range_minmax
+##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
+## 1       0 Placebo         Fema… 76    8.5   78    59    88    46    ( 59 , 88 ) 
+## 2       0 Placebo         Male  73    8.1   74    52    85    33    ( 52 , 85 ) 
+## 3      54 Xanomeline Low… Fema… 76    7.6   78    56    87    47    ( 56 , 87 ) 
+## 4      54 Xanomeline Low… Male  76    8.7   78    51    88    34    ( 51 , 88 ) 
+## 5      81 Xanomeline Hig… Fema… 74    7.5   76    56    88    35    ( 56 , 88 ) 
+## 6      81 Xanomeline Hig… Male  74    8.3   75    56    86    39    ( 56 , 86 )</code></pre>
 <p>Notice that there is a space between the first parentheses and the
 first digit. Please update the code below to eliminate the space. Refer
 back to exercise 9 from Mini Project 2.</p>
@@ -2669,14 +2669,14 @@ back to exercise 9 from Mini Project 2.</p>
 age_stat2</code></pre>
 <pre><code>## # A tibble: 6 × 10
 ## # Groups:   TRT01AN, TRT01A [3]
-##   TRT01AN TRT01A          SEX   mean  sd      med   min   max     n range_minmax
-##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;       
-## 1       0 Placebo         Fema… 76.1  8.5    77.5    59    88    46 ( 59 , 88 ) 
-## 2       0 Placebo         Male  73.4  8.1    74      52    85    33 ( 52 , 85 ) 
-## 3      54 Xanomeline Low… Fema… 76.4  7.6    78      56    87    47 ( 56 , 87 ) 
-## 4      54 Xanomeline Low… Male  75.6  8.7    77.5    51    88    34 ( 51 , 88 ) 
-## 5      81 Xanomeline Hig… Fema… 74.3  7.5    76      56    88    35 ( 56 , 88 ) 
-## 6      81 Xanomeline Hig… Male  73.6  8.3    75      56    86    39 ( 56 , 86 )</code></pre>
+##   TRT01AN TRT01A          SEX   mean  sd    med   min   max   n     range_minmax
+##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
+## 1       0 Placebo         Fema… 76    8.5   78    59    88    46    ( 59 , 88 ) 
+## 2       0 Placebo         Male  73    8.1   74    52    85    33    ( 52 , 85 ) 
+## 3      54 Xanomeline Low… Fema… 76    7.6   78    56    87    47    ( 56 , 87 ) 
+## 4      54 Xanomeline Low… Male  76    8.7   78    51    88    34    ( 51 , 88 ) 
+## 5      81 Xanomeline Hig… Fema… 74    7.5   76    56    88    35    ( 56 , 88 ) 
+## 6      81 Xanomeline Hig… Male  74    8.3   75    56    86    39    ( 56 , 86 )</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Transpose the summary statistics into a single variable of
 results.</li>
@@ -2694,25 +2694,25 @@ grouping variables.</li>
 <pre class="r"><code>age_stat2 </code></pre>
 <pre><code>## # A tibble: 6 × 10
 ## # Groups:   TRT01AN, TRT01A [3]
-##   TRT01AN TRT01A          SEX   mean  sd      med   min   max     n range_minmax
-##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;       
-## 1       0 Placebo         Fema… 76.1  8.5    77.5    59    88    46 ( 59 , 88 ) 
-## 2       0 Placebo         Male  73.4  8.1    74      52    85    33 ( 52 , 85 ) 
-## 3      54 Xanomeline Low… Fema… 76.4  7.6    78      56    87    47 ( 56 , 87 ) 
-## 4      54 Xanomeline Low… Male  75.6  8.7    77.5    51    88    34 ( 51 , 88 ) 
-## 5      81 Xanomeline Hig… Fema… 74.3  7.5    76      56    88    35 ( 56 , 88 ) 
-## 6      81 Xanomeline Hig… Male  73.6  8.3    75      56    86    39 ( 56 , 86 )</code></pre>
+##   TRT01AN TRT01A          SEX   mean  sd    med   min   max   n     range_minmax
+##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
+## 1       0 Placebo         Fema… 76    8.5   78    59    88    46    ( 59 , 88 ) 
+## 2       0 Placebo         Male  73    8.1   74    52    85    33    ( 52 , 85 ) 
+## 3      54 Xanomeline Low… Fema… 76    7.6   78    56    87    47    ( 56 , 87 ) 
+## 4      54 Xanomeline Low… Male  76    8.7   78    51    88    34    ( 51 , 88 ) 
+## 5      81 Xanomeline Hig… Fema… 74    7.5   76    56    88    35    ( 56 , 88 ) 
+## 6      81 Xanomeline Hig… Male  74    8.3   75    56    86    39    ( 56 , 86 )</code></pre>
 <pre class="r"><code>age_stat2 %&gt;%
     ungroup()</code></pre>
 <pre><code>## # A tibble: 6 × 10
-##   TRT01AN TRT01A          SEX   mean  sd      med   min   max     n range_minmax
-##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;       
-## 1       0 Placebo         Fema… 76.1  8.5    77.5    59    88    46 ( 59 , 88 ) 
-## 2       0 Placebo         Male  73.4  8.1    74      52    85    33 ( 52 , 85 ) 
-## 3      54 Xanomeline Low… Fema… 76.4  7.6    78      56    87    47 ( 56 , 87 ) 
-## 4      54 Xanomeline Low… Male  75.6  8.7    77.5    51    88    34 ( 51 , 88 ) 
-## 5      81 Xanomeline Hig… Fema… 74.3  7.5    76      56    88    35 ( 56 , 88 ) 
-## 6      81 Xanomeline Hig… Male  73.6  8.3    75      56    86    39 ( 56 , 86 )</code></pre>
+##   TRT01AN TRT01A          SEX   mean  sd    med   min   max   n     range_minmax
+##     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
+## 1       0 Placebo         Fema… 76    8.5   78    59    88    46    ( 59 , 88 ) 
+## 2       0 Placebo         Male  73    8.1   74    52    85    33    ( 52 , 85 ) 
+## 3      54 Xanomeline Low… Fema… 76    7.6   78    56    87    47    ( 56 , 87 ) 
+## 4      54 Xanomeline Low… Male  76    8.7   78    51    88    34    ( 51 , 88 ) 
+## 5      81 Xanomeline Hig… Fema… 74    7.5   76    56    88    35    ( 56 , 88 ) 
+## 6      81 Xanomeline Hig… Male  74    8.3   75    56    86    39    ( 56 , 86 )</code></pre>
 <p>At the minute, the <code>age_stat</code> data has one column for each
 summary statistic. But in our example table, we want to define columns
 by the treatment variables and also in this case by the <code>SEX</code>
@@ -2767,12 +2767,12 @@ in SAS.</p>
 ##    TRT01A  SEX    category     values     
 ##    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;      
 ##  1 Placebo Female n            46         
-##  2 Placebo Female mean         76.1       
-##  3 Placebo Female med          77.5       
+##  2 Placebo Female mean         76         
+##  3 Placebo Female med          78         
 ##  4 Placebo Female sd           8.5        
 ##  5 Placebo Female range_minmax ( 59 , 88 )
 ##  6 Placebo Male   n            33         
-##  7 Placebo Male   mean         73.4       
+##  7 Placebo Male   mean         73         
 ##  8 Placebo Male   med          74         
 ##  9 Placebo Male   sd           8.1        
 ## 10 Placebo Male   range_minmax ( 52 , 85 )
@@ -2801,13 +2801,13 @@ function to collect the variables into a vector of variable names.</p>
 ##    SEX    category     Placebo     `Xanomeline Low Dose` `Xanomeline High Dose`
 ##    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                 &lt;chr&gt;                 
 ##  1 Female n            46          47                    35                    
-##  2 Female mean         76.1        76.4                  74.3                  
-##  3 Female med          77.5        78                    76                    
+##  2 Female mean         76          76                    74                    
+##  3 Female med          78          78                    76                    
 ##  4 Female sd           8.5         7.6                   7.5                   
 ##  5 Female range_minmax ( 59 , 88 ) ( 56 , 87 )           ( 56 , 88 )           
 ##  6 Male   n            33          34                    39                    
-##  7 Male   mean         73.4        75.6                  73.6                  
-##  8 Male   med          74          77.5                  75                    
+##  7 Male   mean         73          76                    74                    
+##  8 Male   med          74          78                    75                    
 ##  9 Male   sd           8.1         8.7                   8.3                   
 ## 10 Male   range_minmax ( 52 , 85 ) ( 51 , 88 )           ( 56 , 86 )</code></pre>
 <ol start="8" style="list-style-type: decimal">
@@ -2836,8 +2836,8 @@ agestat_cat</code></pre>
 ##   category       Placebo_Female Placebo_Male `Xanomeline Low Dose_Female`
 ##   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;                       
 ## 1 N              46             33           47                          
-## 2 Mean           76.1           73.4         76.4                        
-## 3 Median         77.5           74           78                          
+## 2 Mean           76             73           76                          
+## 3 Median         78             74           78                          
 ## 4 Std Dev        8.5            8.1          7.6                         
 ## 5 Range(min,max) ( 59 , 88 )    ( 52 , 85 )  ( 56 , 87 )                 
 ## # ℹ 3 more variables: `Xanomeline Low Dose_Male` &lt;chr&gt;,
@@ -2931,8 +2931,9 @@ adsl_saf %&gt;%
     summarize(
             mean = mean({{variable}})  %&gt;% round(digits = {{rnd}})   %&gt;% format(nsmall={{rnd}})  ,
             sd = sd({{variable}})      %&gt;% round(digits = {{rnd}}+1) %&gt;% format(nsmall = {{rnd}}+1), 
-            med = median({{variable}}) %&gt;% round(digits = {{rnd}})   %&gt;% format(nsmall = {{rnd}}),                              min = min({{variable}})    %&gt;% round(digits = {{rnd}}-1) %&gt;% format(nsmall = {{rnd}}-1), 
-            max = max({{variable}})    %&gt;% round(digits = {{rnd}}-1) %&gt;% format(nsmall = {{rnd}}-1),
+            med = median({{variable}}) %&gt;% round(digits = {{rnd}})   %&gt;% format(nsmall = {{rnd}}),                              
+            min = min({{variable}})    %&gt;% round(digits = {{rnd}}) %&gt;% format(nsmall = {{rnd}}), 
+            max = max({{variable}})    %&gt;% round(digits = {{rnd}}) %&gt;% format(nsmall = {{rnd}}),
             n = n()) %&gt;% 
     mutate(range_minmax= paste0(&quot;(&quot;,min, &quot;, &quot;, max, &quot;)&quot;)) %&gt;%
     ungroup() %&gt;%
@@ -2947,49 +2948,49 @@ adsl_saf %&gt;%
                                 category == &quot;range_minmax&quot; ~ &quot;Range(min,max)&quot;)) %&gt;% 
     return(stat_cat)
 }</code></pre>
-<pre class="r"><code>adsl_eff_Weight &lt;- varSummary(.data = adsl, variable = WEIGHTBL, rnd=3)</code></pre>
+<pre class="r"><code>adsl_eff_Weight &lt;- varSummary(.data = adsl, variable = WEIGHTBL, rnd=0)</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;TRT01AN&#39;, &#39;TRT01A&#39;. You can override using
 ## the `.groups` argument.</code></pre>
 <pre class="r"><code>adsl_eff_Weight</code></pre>
 <pre><code>## # A tibble: 5 × 7
-##   category       Placebo_Female Placebo_Male   `Xanomeline Low Dose_Female`
-##   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;                       
-## 1 N              46             33             47                          
-## 2 Mean           56.726         73.239         NA                          
-## 3 Median         55.800         75.300         NA                          
-## 4 Std Dev        9.8436         8.4309         NA                          
-## 5 Range(min,max) (34.00, 79.80) (49.40, 86.20) (NA, NA)                    
+##   category       Placebo_Female Placebo_Male `Xanomeline Low Dose_Female`
+##   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;                       
+## 1 N              46             33           47                          
+## 2 Mean           57             73           NA                          
+## 3 Median         56             75           NA                          
+## 4 Std Dev        9.8            8.4          NA                          
+## 5 Range(min,max) (34, 80)       (49, 86)     (NA, NA)                    
 ## # ℹ 3 more variables: `Xanomeline Low Dose_Male` &lt;chr&gt;,
 ## #   `Xanomeline High Dose_Female` &lt;chr&gt;, `Xanomeline High Dose_Male` &lt;chr&gt;</code></pre>
-<pre class="r"><code>adsl_eff_Height &lt;- varSummary(.data = adsl, variable = HEIGHTBL, rnd=3)</code></pre>
+<pre class="r"><code>adsl_eff_Height &lt;- varSummary(.data = adsl, variable = HEIGHTBL, rnd=0)</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;TRT01AN&#39;, &#39;TRT01A&#39;. You can override using
 ## the `.groups` argument.</code></pre>
 <pre class="r"><code>adsl_eff_Height</code></pre>
 <pre><code>## # A tibble: 5 × 7
-##   category       Placebo_Female   Placebo_Male     `Xanomeline Low Dose_Female`
-##   &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                       
-## 1 N              46               33               47                          
-## 2 Mean           156.785          173.030          157.657                     
-## 3 Median         156.850          174.000          157.500                     
-## 4 Std Dev        7.5280           8.0884           7.5698                      
-## 5 Range(min,max) (142.20, 174.00) (144.80, 185.40) (135.90, 175.30)            
+##   category       Placebo_Female Placebo_Male `Xanomeline Low Dose_Female`
+##   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;                       
+## 1 N              46             33           47                          
+## 2 Mean           157            173          158                         
+## 3 Median         157            174          158                         
+## 4 Std Dev        7.5            8.1          7.6                         
+## 5 Range(min,max) (142, 174)     (145, 185)   (136, 175)                  
 ## # ℹ 3 more variables: `Xanomeline Low Dose_Male` &lt;chr&gt;,
 ## #   `Xanomeline High Dose_Female` &lt;chr&gt;, `Xanomeline High Dose_Male` &lt;chr&gt;</code></pre>
 <pre class="r"><code>final &lt;- rbind(adsl_eff_Weight, adsl_eff_Height)
 final</code></pre>
 <pre><code>## # A tibble: 10 × 7
-##    category       Placebo_Female   Placebo_Male     `Xanomeline Low Dose_Female`
-##    &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                       
-##  1 N              46               33               47                          
-##  2 Mean           56.726           73.239           NA                          
-##  3 Median         55.800           75.300           NA                          
-##  4 Std Dev        9.8436           8.4309           NA                          
-##  5 Range(min,max) (34.00, 79.80)   (49.40, 86.20)   (NA, NA)                    
-##  6 N              46               33               47                          
-##  7 Mean           156.785          173.030          157.657                     
-##  8 Median         156.850          174.000          157.500                     
-##  9 Std Dev        7.5280           8.0884           7.5698                      
-## 10 Range(min,max) (142.20, 174.00) (144.80, 185.40) (135.90, 175.30)            
+##    category       Placebo_Female Placebo_Male `Xanomeline Low Dose_Female`
+##    &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;                       
+##  1 N              46             33           47                          
+##  2 Mean           57             73           NA                          
+##  3 Median         56             75           NA                          
+##  4 Std Dev        9.8            8.4          NA                          
+##  5 Range(min,max) (34, 80)       (49, 86)     (NA, NA)                    
+##  6 N              46             33           47                          
+##  7 Mean           157            173          158                         
+##  8 Median         157            174          158                         
+##  9 Std Dev        7.5            8.1          7.6                         
+## 10 Range(min,max) (142, 174)     (145, 185)   (136, 175)                  
 ## # ℹ 3 more variables: `Xanomeline Low Dose_Male` &lt;chr&gt;,
 ## #   `Xanomeline High Dose_Female` &lt;chr&gt;, `Xanomeline High Dose_Male` &lt;chr&gt;</code></pre>
 </div>

@@ -107,12 +107,12 @@ Using the above information, finish the code below by creating a data frame name
 ```{r}
 age_stat<- adsl_eff %>%
   group_by(TRT01AN,TRT01A,SEX) %>%
-  summarize(mean = (mean(AGE) %>% round(digits = 1) %>% format(nsmall=1))  ,
+  summarize(mean = (mean(AGE) %>% round(digits = 0) %>% format(nsmall=0))  ,
             sd = (sd(AGE) %>% round(digits = 1) %>% format(nsmall = 1)), 
-            med = median(AGE)  ,              
-            min = min(AGE), 
-            max = max(AGE),
-            n = n())
+            med = (median(AGE) %>% round(digits = 0) %>% format(nsmall=0)),              
+            min = (min(AGE) %>% round(digits = 0) %>% format(nsmall=0)), 
+            max = (max(AGE) %>% round(digits = 0) %>% format(nsmall=0)),
+            n = (n() %>% round(digits = 0) %>% format(nsmall=0)))
 
 age_stat
 ```
@@ -294,8 +294,9 @@ varSummary <- function(.data = NULL, variable = NULL, rnd = 1, rname = NULL) {
     summarize(
             mean = mean({{variable}})  %>% round(digits = {{rnd}})   %>% format(nsmall={{rnd}})  ,
             sd = sd({{variable}})      %>% round(digits = {{rnd}}+1) %>% format(nsmall = {{rnd}}+1), 
-            med = median({{variable}}) %>% round(digits = {{rnd}})   %>% format(nsmall = {{rnd}}),                              min = min({{variable}})    %>% round(digits = {{rnd}}-1) %>% format(nsmall = {{rnd}}-1), 
-            max = max({{variable}})    %>% round(digits = {{rnd}}-1) %>% format(nsmall = {{rnd}}-1),
+            med = median({{variable}}) %>% round(digits = {{rnd}})   %>% format(nsmall = {{rnd}}),                              
+            min = min({{variable}})    %>% round(digits = {{rnd}}) %>% format(nsmall = {{rnd}}), 
+            max = max({{variable}})    %>% round(digits = {{rnd}}) %>% format(nsmall = {{rnd}}),
             n = n()) %>% 
     mutate(range_minmax= paste0("(",min, ", ", max, ")")) %>%
     ungroup() %>%
@@ -313,12 +314,12 @@ varSummary <- function(.data = NULL, variable = NULL, rnd = 1, rname = NULL) {
 ```
 
 ```{r Weight}
-adsl_eff_Weight <- varSummary(.data = adsl, variable = WEIGHTBL, rnd=3)
+adsl_eff_Weight <- varSummary(.data = adsl, variable = WEIGHTBL, rnd=0)
 adsl_eff_Weight
 ```
 
 ```{r Height}
-adsl_eff_Height <- varSummary(.data = adsl, variable = HEIGHTBL, rnd=3)
+adsl_eff_Height <- varSummary(.data = adsl, variable = HEIGHTBL, rnd=0)
 adsl_eff_Height
 
 ```
