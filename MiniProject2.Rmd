@@ -418,7 +418,7 @@ adae_table_challenge2  <- small_n_cnt_3 %>%
              mutate(perc_char = format(perc, nsmall=1)) %>%
              mutate(npct = paste(n, "(", perc_char, ")" ) ) %>%
              ungroup() %>%
-             arrange(AESOCCD) %>% 
+             arrange(AESOCCD, AEBODSYS) %>% 
              select(TRTA, AEBODSYS, npct) %>% 
              pivot_wider(names_from = TRTA, values_from = npct)  %>% 
              mutate(AEBODSYS = ifelse(AEBODSYS == "", "Missing", AEBODSYS)) %>% 

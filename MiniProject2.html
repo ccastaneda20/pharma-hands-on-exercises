@@ -21340,7 +21340,7 @@ small_n_cnt_3</code></pre>
              mutate(perc_char = format(perc, nsmall=1)) %&gt;%
              mutate(npct = paste(n, &quot;(&quot;, perc_char, &quot;)&quot; ) ) %&gt;%
              ungroup() %&gt;%
-             arrange(AESOCCD) %&gt;% 
+             arrange(AESOCCD, AEBODSYS) %&gt;% 
              select(TRTA, AEBODSYS, npct) %&gt;% 
              pivot_wider(names_from = TRTA, values_from = npct)  %&gt;% 
              mutate(AEBODSYS = ifelse(AEBODSYS == &quot;&quot;, &quot;Missing&quot;, AEBODSYS)) %&gt;% 
@@ -21353,15 +21353,15 @@ small_n_cnt_3</code></pre>
 ##    AEBODSYS                 Placebo `Xanomeline Low Dose` `Xanomeline High Dose`
 ##    &lt;chr&gt;                    &lt;chr&gt;   &lt;chr&gt;                 &lt;chr&gt;                 
 ##  1 CARDIAC DISORDERS        27 ( 9… 30 ( 6.9 )            34 ( 7.5 )            
-##  2 EAR AND LABYRINTH DISOR… 2 ( 0.… 3 ( 0.7 )             1 ( 0.2 )             
-##  3 EYE DISORDERS            8 ( 2.… 2 ( 0.5 )             2 ( 0.4 )             
-##  4 GASTROINTESTINAL DISORD… 26 ( 8… 24 ( 5.5 )            37 ( 8.1 )            
-##  5 GENERAL DISORDERS AND A… 48 ( 1… 120 ( 27.6 )          124 ( 27.3 )          
-##  6 HEPATOBILIARY DISORDERS  1 ( 0.… 0                     0                     
-##  7 INFECTIONS AND INFESTAT… 35 ( 1… 18 ( 4.1 )            20 ( 4.4 )            
-##  8 INJURY, POISONING AND P… 9 ( 3.… 12 ( 2.8 )            8 ( 1.8 )             
-##  9 INVESTIGATIONS           19 ( 6… 13 ( 3.0 )            8 ( 1.8 )             
-## 10 METABOLISM AND NUTRITIO… 8 ( 2.… 1 ( 0.2 )             5 ( 1.1 )             
+##  2 CONGENITAL, FAMILIAL AN… 0       1 ( 0.2 )             2 ( 0.4 )             
+##  3 EAR AND LABYRINTH DISOR… 2 ( 0.… 3 ( 0.7 )             1 ( 0.2 )             
+##  4 EYE DISORDERS            8 ( 2.… 2 ( 0.5 )             2 ( 0.4 )             
+##  5 GASTROINTESTINAL DISORD… 26 ( 8… 24 ( 5.5 )            37 ( 8.1 )            
+##  6 GENERAL DISORDERS AND A… 48 ( 1… 120 ( 27.6 )          124 ( 27.3 )          
+##  7 HEPATOBILIARY DISORDERS  1 ( 0.… 0                     0                     
+##  8 IMMUNE SYSTEM DISORDERS  0       2 ( 0.5 )             1 ( 0.2 )             
+##  9 INFECTIONS AND INFESTAT… 35 ( 1… 18 ( 4.1 )            20 ( 4.4 )            
+## 10 INJURY, POISONING AND P… 9 ( 3.… 12 ( 2.8 )            8 ( 1.8 )             
 ## # ℹ 13 more rows</code></pre>
 <p>Save the .RMD file on your desktop and click on the “Knit” button at
 the top of the file to render an HTML version of this document.</p>
