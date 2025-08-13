@@ -1,7 +1,7 @@
 ---
 title: "Mini-project 9 - Reproducible examples and {reprex}"
-author: "Leanne Vicente"
-date: "3/8/2023"
+author: "Cielo Marie Castañeda"
+date: "08/13/2025"
 output: html_document
 ---
 
@@ -150,6 +150,7 @@ Again as long as we have the necessary packages included in the reprex, there's 
 5.  Looking at reprex including a plot.
 
 ```{r}
+# knitr::ops_knit$set(upload.fun = identity)
 library(tidyverse)
 library(rio)
 
