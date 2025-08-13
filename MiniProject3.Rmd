@@ -1,7 +1,7 @@
 ---
 title: "Mini-project 3 - Generating grouped summary statistics"
-author: "Mike K Smith"
-date: "02/14/2023"
+author: "Cielo Marie Castañeda"
+date: "02/21/2025"
 output: html_document
 ---
 
